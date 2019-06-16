@@ -1,0 +1,250 @@
+<!DOCTYPE html>
+<html>
+
+<head lang="en">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,width=device-width,initial-scale=1.0"/>
+    <title>登陆页面</title>
+    <link rel="stylesheet" href="../css/login.css" />
+    <script src="../js/requests.js" type="text/javascript"></script>
+    <script src='../js/setting.js' type='text/javascript'></script>
+</head>
+
+<body>
+    <div id="zhuce"><a type="button" onclick="openRegist()">注册</a></div>
+    <div id="login">
+
+    </div>
+    <div class="login_bg">
+        <div id="logo"></div>
+        <form id="form1" action="#" autocomplete="on">
+            <div class="userName">
+                <span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>
+                <input hidden id="email" type="email" name="email" placeholder="&nbsp;&nbsp;请输入Email" oninput="rePwd()" required/>
+            </div>
+            <div class="passWord">
+                <span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>
+                <input hidden id="pwd" type="password" name="pwd" placeholder="&nbsp;&nbsp;请输入密码" pattern="[0-9A-Za-z]{6,18}$" autocomplete="off" required/>
+            </div>
+            <div class="choose_box">
+                <div>
+                    <input id="jzmm" hidden type="checkbox" checked="false" name="checkbox" onclick="if_clearStore()"/>
+                    <span>记住密码</span>
+                </div>
+                <a href="newPassword.html">忘记密码</a>
+            </div>
+            <input class="login_btn" type="button" value="登录" onclick=javascrtpt:jump()>
+        </form>
+        <div class="other_login">
+            <span>点击登录按钮代表您已同意用户协议和隐私政策</span>
+        </div>
+    </div>
+
+    <script type="text/javascript" src="../script/api.js"></script>
+    <script type="text/javascript" src="../js/func.js"></script>
+    <script>
+      apiready = function () {
+        setHeight()
+        api.addEventListener({
+            name: 'closeregister'
+        }, function(ret, err){
+            successOpeare();
+        });
+        var email1 = api.pageParam.email1
+        var pwd = api.pageParam.pwd
+        if(email1 !== 0 && typeof(email1)!="undefined"){
+            document.getElementById("email").value = email1;
+        }
+        if(pwd !== 0 && typeof(pwd)!="undefined" ){
+            document.getElementById("pwd").value = pwd;
+        }
+        else{
+            document.getElementById("jzmm").checked = false;
+        }
+        var emaile = document.getElementById("email");
+        $api.removeAttr(emaile,'hidden');
+        var pwdd = document.getElementById("pwd");
+        $api.removeAttr(pwdd,'hidden');
+        var jzmm = document.getElementById("jzmm");
+        $api.removeAttr(jzmm,'hidden');
+      }
+
+      function rePwd(){
+          var email = $api.byId('email').value;
+          var email2 = $api.getStorage('email');
+          var pwd = $api.byId('pwd');
+          var pwd1;
+          if(email == email2){
+            pwd1 = $api.getStorage('pwd');
+            if(typeof(pwd1) != 'undefined'){
+                $api.val(pwd,pwd1)
+            }
+            else
+                $api.val(pwd,'')
+          }
+          else
+            $api.val(pwd,'');
+      }
+
+      function successOpeare(){
+            var email = $api.getStorage('email');
+            try
+            {
+                var emaile = document.getElementById("email")
+                emaile.value = email
+                pwd = $api.byId('pwd');
+                $api.val(pwd,'');
+            }
+            catch(err)
+            {
+                alert(err)
+            }
+      }
+
+      function setHeight(){
+          var height = api.winWidth;
+          document.getElementsByTagName('body')[0].setAttribute('background-size', '100%' + height);    
+      }
+      function openRegist(){
+          api.openWin({
+            name : 'register',
+            url : 'register.html'
+          });
+      }
+
+      function check(){
+        var email = document.getElementById("email");
+        var pwd = document.getElementById("pwd");
+        length = email.value.length;
+        if(length == 0){
+                api.toast({
+                    msg: 'Email不能为空!',
+                    duration: 2000,
+                    location: 'top'
+                });
+                email.focus();
+                return false;
+        }
+        length = pwd.value.length;
+            if(length == 0){
+                api.toast({
+                    msg: '密码不能为空!',
+                    duration: 2000,
+                    location: 'top'
+                });
+                pwd.focus();
+                return false;
+        }
+        var reg_email = /^[a-zA-Z0-9_-]+(\.[a-zA-Z0-9_-]+){0,4}@[a-zA-Z0-9_-]+(\.[a-zA-Z0-9_-]+){0,4}$/;
+        if(!reg_email.test(email.value)){
+            api.toast({
+                msg: 'email格式不正确!',
+                duration: 2000,
+                location: 'top'
+            });
+            email.focus();
+            return false;
+        }
+        var reg_pwd = /^[0-9A-Za-z]{6,18}$/;
+        if(!reg_pwd.test(pwd.value)){
+            api.toast({
+                msg: '密码必须为6-18位的字母和数字!',
+                duration: 2000,
+                location: 'top'
+            });
+            pwd.focus();
+            return false;
+        }
+        return true;
+      }
+
+      function jump(){
+        if(!check()){
+            return;
+        }
+        var email2 = $api.byId('email').value;
+        pwd1 = $api.getStorage('pwd1');
+        if(typeof(pwd1) != 'undefined'){
+            email3 = $api.getStorage('email');
+            if(email2 == email3){
+                api.toast({
+                    msg: '当前帐号已登录!',
+                    duration: 2000,
+                    location: 'top'
+                });
+                return;
+            }
+        }
+        var values = {}
+        var email = document.getElementById("email").value;
+        var pwd = document.getElementById("pwd").value;
+        values.email = email
+        values.pwd = pwd
+        AjaxPost('login','POST',values,successAjax)
+      }
+
+      function successAjax(data){
+        error = data.error;
+        result = data.result;
+        if(result == '1'){
+            var user = data.data.user;
+            var email = document.getElementById("email").value;
+            var pwd = document.getElementById("pwd").value;
+            var result = document.getElementById("jzmm").checked;
+            var jzmm;
+            if(result === true){
+                jzmm = 1;
+            }
+            else{
+                jzmm = 0;
+            }
+            if(jzmm === 1){
+                $api.setStorage('email',email);
+                $api.setStorage('pwd',pwd); 
+                $api.setStorage('pwd1',pwd);
+            }
+            else{
+                $api.setStorage('email',email);
+                $api.setStorage('pwd1',pwd);
+            }
+            $api.setStorage('user',user);
+            api.removePrefs({
+                    key: 'tx'
+            });
+            is_tx(email,pwd,txjz);
+            // api.toast({
+            //     msg: '登录成功!',
+            //     duration: 2000,
+            //     location: 'top'
+            // });            
+        }
+        else if(error == '1'){
+            api.toast({
+                msg: '邮箱或密码错误!',
+                duration: 2000,
+                location: 'top'
+            });  
+        }
+      }
+
+      function txjz(){
+        api.sendEvent({
+                name: 'reload',
+                extra: {
+                    state: 'no'
+                }
+            });
+            api.closeWin({
+            });
+      }
+
+      function if_clearStore(){
+        var result = document.getElementById("jzmm").checked;
+        if(result === false){
+            $api.rmStorage('pwd');
+        }
+      }
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,width=device-width,initial-scale=1.0" />
+    <title>Document</title>
+    <link rel="stylesheet" href="../css/wdaw.css" />
+    <script src="../js/requests.js" type="text/javascript"></script>
+    <script src='../js/setting.js' type='text/javascript'></script>
+</head>
+<body>
+        <div id="answers">
+
+        </div>
+        <div class="line"></div>
+        <script id="evaluationtmpl" type="text/x-dot-template">
+            {{ for(var i in it) { }}
+            <div class="Card TopstoryItem TopstoryItem-isRecommend" tabindex={{=it[i]['id']}}>
+                <div class="Feed">
+                  <div class="ContentItem AnswerItem">
+                    <h2 class="ContentItem-title">
+                        <a onclick="getAnswers({{=it[i]['id']}},'{{=it[i]['TITLE']}}')">{{=it[i]['TITLE']}}</a></div>
+                    </h2>
+                    <div class="RichContent is-collapsed">
+                      <div class="RichContent-inner">
+                        <span class="RichText ztext CopyrightRichText-richText" itemprop="text">{{=it[i]['CONTENT']}}</span>
+                      </div>
+                      <div class="useractions">
+                          
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            {{ } }}
+        </script>
+        <script type="text/javascript" src="../js/doT.min.js"></script>
+        <script type="text/javascript" src="../script/api.js"></script>
+        <script>
+                var title;
+                var jsos;
+                apiready = function() {
+                    showcontent()
+                }
+
+                function showcontent(){
+                    var path;
+                    var email = $api.getStorage('email');
+                    var pwd = $api.getStorage('pwd1');
+                    if(typeof(email) != "undefined" && typeof(pwd) != "undefined"){
+                        var emailk = email.split('@');
+                        path = 'cache://lljl' + emailk[0] + '.txt';
+                    }
+                    else{
+                        path = 'cache://lljl.txt';
+                    }
+                    contents = api.readFile({
+                        path: path,
+                        sync:true
+                    });
+                    var newjson = [];
+                    if(contents !== ''){
+                        tempcont = '[1' + contents + ']'
+                        // console.log(tempcont);
+                        jsos = JSON.parse(tempcont);
+                        // alert(jsos.length);
+                        for(var js in jsos){
+                            if(js > 0){
+                                newjson.push(jsos[js])
+                            }
+                        }
+                    }
+                    else
+                        return;
+                    tem = $api.byId('evaluationtmpl')
+                    text = $api.text(tem)
+                    var evalText = doT.template(text);
+                    var content = $api.byId('answers')
+                    $api.append(content,evalText(newjson))
+                }
+
+                function getAnswers(id1,title1){
+                    id = id1;
+                    title = title1;
+                    values = {}
+                    values.id = id1;
+                    AjaxPost('getAnswerContent','POST',values,openaritlecontent)
+                }
+
+                function openaritlecontent(data){
+                    api.openWin({
+                        name: 'articlehead',
+                        url: 'articlehead.html',
+                        bounces: false,
+                        pageParam: {
+                            'title':title,
+                            'content':data.CONTENT
+                        }
+                    });
+                }
+        </script>
+</body>
+</html>

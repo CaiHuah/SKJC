@@ -1,0 +1,261 @@
+<!DOCTYPE html>
+<html>
+
+<head lang="en">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,width=device-width,initial-scale=1.0"/>
+    <title>修改密码</title>
+    <link rel="stylesheet" href="../css/register.css" />
+    <script src="../js/requests.js" type="text/javascript"></script>
+    <script src='../js/setting.js' type='text/javascript'></script>
+    <style>
+        .message {
+            background: none;
+            padding-top: 10%;
+        }
+
+        .message input {
+            width: 83%;
+            margin: 0 4%;
+        }
+
+        .content form input:not(:nth-child(6)) {
+            border: 0;
+            margin-bottom: 8%;
+        }
+
+        .message .icons b {
+            top: 14.5%;
+            left: 11%;
+        }
+
+        .message .icons b:nth-child(2) {
+            top: 37%;
+            left: 10%;
+        }
+
+        .message .icons b:nth-child(3) {
+            top: 60%;
+        }
+
+        .message .icons b:nth-child(4) {
+            top: 82%;
+        }
+
+        .code {
+            top: 33.475%;
+            right: 7.5%;
+            background: #21a9f5;
+            color: #ffffff;
+            padding: 3.635% 5%;
+        }
+        .choose_box{
+            height: 2.5em;
+            line-height: 0.5em;
+            padding: 0 35px;
+        }
+        .choose_box a{
+            float: right;
+        		text-decoration: none;
+        		color: #000000;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="newPass">
+        <div class="regTop">
+            <span>修改密码</span>
+            <a class="back" onclick="back()">&lt;&nbsp;返回</a>
+        </div>
+        <div class="content">
+            <form>
+                <div class="message">
+                    <input type="email" id="email" placeholder="请输入Email"  />
+                    <input type="password" id="oldPwd" placeholder="请输入旧密码(字母或数字)" />
+                    <input type="password" id="newPwd1" placeholder="请输入新密码(字母或数字)" />
+                    <input type="password" id="newPwd2" placeholder="请再次输入密码" />
+                </div>
+
+                <div class="choose_box">
+                    <a onclick="opennewPassword()">忘记密码</a>
+                </div>
+
+                <button type="button" class="submit" onclick="resetPwd()">确定</button>
+            </form>
+        </div>
+    </div>
+</body>
+<script type="text/javascript" src="../script/api.js"></script>
+<script>
+    apiready = function(){
+        email = $api.getStorage('email');
+        pwd1 = $api.getStorage('pwd1');
+        if(typeof(email) != 'undefined' && typeof(pwd1) != 'undefined'){
+            $api.byId('email').value = email;
+        }
+    }
+        
+    function check(){
+        var email = document.getElementById("email");
+        var oldpwd = document.getElementById("oldPwd");
+        var newPwd1 = document.getElementById("newPwd1");
+        var newPwd2 = document.getElementById("newPwd2")
+        if(email.value.length == 0){
+                api.toast({
+                    msg: 'Email不能为空!',
+                    duration: 2000,
+                    location: 'top'
+                });
+                email.focus();
+                return false;
+        }
+        if(oldpwd.value.length == 0){
+                api.toast({
+                    msg: '旧密码不能为空!',
+                    duration: 2000,
+                    location: 'top'
+                });
+                oldpwd.focus();
+                return false;
+        }
+        if(newPwd1.value.length == 0){
+                api.toast({
+                    msg: '新密码不能为空!',
+                    duration: 2000,
+                    location: 'top'
+                });
+                newPwd1.focus();
+                return false;
+        }
+        if(newPwd2.value.length == 0){
+                api.toast({
+                    msg: '确认密码不能为空!',
+                    duration: 2000,
+                    location: 'top'
+                });
+                newPwd2.focus();
+                return false;
+        }
+        var reg_email = /^[a-zA-Z0-9_-]+(\.[a-zA-Z0-9_-]+){0,4}@[a-zA-Z0-9_-]+(\.[a-zA-Z0-9_-]+){0,4}$/;
+        if(!reg_email.test(email.value)){
+            api.toast({
+                msg: 'email格式不正确!',
+                duration: 2000,
+                location: 'top'
+            });
+            email.focus();
+            return false;
+        }
+        var reg_pwd = /^[0-9A-Za-z]{6,18}$/;
+        if(!reg_pwd.test(oldpwd.value)){
+            api.toast({
+                msg: '密码必须为6-18位的字母和数字!',
+                duration: 2000,
+                location: 'top'
+            });
+            oldpwd.focus();
+            return false;
+        }
+        if(oldpwd.value == newPwd1.value){
+            api.toast({
+                msg: '新密码不能与旧密码相同!',
+                duration: 2000,
+                location: 'top'
+            });
+            newPwd1.focus();
+            return false;
+        }
+        if(!reg_pwd.test(newPwd1.value)){
+            api.toast({
+                msg: '密码必须为6-18位的字母和数字!',
+                duration: 2000,
+                location: 'top'
+            });
+            newPwd1.focus();
+            return false;
+        }
+        if(!reg_pwd.test(newPwd2.value)){
+            api.toast({
+                msg: '密码必须为6-18位的字母和数字!',
+                duration: 2000,
+                location: 'top'
+            });
+            newPwd2.focus();
+            return false;
+        }
+        return true;
+    }
+
+    function opennewPassword(){
+        api.openWin({
+            name: 'newPassword',
+            url: 'newPassword.html',
+        });
+    }
+
+    function back(){
+            api.closeWin({
+        });
+    }
+
+    function resetPwd(){
+        if(!check())
+            return;
+        var values = {}
+        var email = document.getElementById("email").value;
+        var oldpwd = document.getElementById("oldPwd").value;
+        var newPwd1 = document.getElementById("newPwd1").value;
+        values.email = email
+        values.oldPwd = oldpwd
+        values.newPwd = newPwd1
+        AjaxPost('resetPwd','POST',values,successAjax)
+    }
+
+    function successAjax(data){
+        result = data['result']
+        if(result){
+            api.toast({
+                msg: '修改成功!',
+                duration: 2000,
+                location: 'bottom'
+            });
+            email = $api.byId('email').value;
+            email1 = $api.getStorage('email');
+            pwd1 = $api.getStorage('pwd1')
+            if(typeof(email1) != 'undefined' && typeof(pwd1) != 'undefined'){
+                if(email == email1){
+                    $api.rmStorage('pwd1');
+                    $api.rmStorage('pwd');
+                    $api.rmStorage('user');
+                    api.removePrefs({
+                            key: 'tx'
+                    });
+                    api.sendEvent({
+                            name: 'reload',
+                            extra: {
+                                    state: 'no'
+                            }
+                    });
+                }
+            }
+            var Email = document.getElementById("email");
+            var Oldpwd = document.getElementById("oldPwd");
+            var NewPwd1 = document.getElementById("newPwd1");
+            var NewPwd2 = document.getElementById("newPwd2")
+            $api.val(Email,'')
+            $api.val(Oldpwd,'')
+            $api.val(NewPwd1,'')
+            $api.val(NewPwd2,'')
+        }
+        else{
+            api.toast({
+                msg: '请确认您的邮箱或密码是否正确!',
+                duration: 2000,
+                location: 'bottom'
+            });
+        }
+    }
+
+</script>
+</html>

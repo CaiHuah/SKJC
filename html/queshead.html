@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html>
+
+<head lang="en">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,width=device-width,initial-scale=1.0"/>
+    <title>搜索页面</title>
+    <script src="../js/requests.js" type="text/javascript"></script>
+    <script src='../js/setting.js' type='text/javascript'></script>
+    <script src="../js/retrieval.js" type="text/javascript"></script>
+    <style>
+    body{
+      height: 160px;
+      background-color: white;
+    }
+    .content {
+        border-radius: 10px;
+        width: 100%;
+        height: 80px;
+    }
+    .middle_middle{
+      margin-top: 15%;
+    }
+    .content form input:not(:nth-child(6)) {
+        border: 0;
+        border-bottom: 1px solid #c3c3c5;
+    }
+
+    .content form {
+        margin: auto;
+        width: 90%;
+        height: 35.21%;
+    }
+
+    .message {
+        /* margin-bottom: 5%; */
+        width: 100%;
+        height: 35px;
+        /* border:1px dashed blue; */
+        border-radius: 5px;
+        background: #ffffff;
+        /* padding: 10% 30%; */
+        position: relative;
+        top:30px;
+    }
+
+    .message input {
+        width: 85%;
+        height: 95%;
+        border-radius: 5px;
+        font-size: 0.875em;
+        font-family: "Microsoft YaHei";
+        outline: none;
+    }
+
+    .code {
+        width: 15%;
+        height: 100%;
+        /* border:1px dashed black; */
+        color: #21a9f5;
+        border-radius: 5px;
+        font-size: 1.1em;
+        font-family: "Microsoft YaHei";
+        text-decoration: none;
+    }
+    .line {
+        height: 8px;
+        background: #f5f5f5;
+        border-radius: 5px;
+        width: 100%;
+        position: absolute;
+        top:80px;
+    }
+    </style>
+</head>
+
+<body>
+  <div class="content" id="content">
+
+      <form action="#">
+          <div class="message">
+              <input id="code" type="text" placeholder="&nbsp;&nbsp;&nbsp;请输入错误码" required/>
+              <a class="code" href="#" onclick="getAnswer()" required>搜索</a>
+          </div>
+      </form>
+      <!-- <div class="line"></div> -->
+  </div>
+
+</body>
+<script type="text/javascript" src="../script/api.js"></script>
+<script>
+    var wid;
+    var hei;
+    var global_code;
+    apiready = function() {
+        api.addEventListener({
+            name: 'reSearch'
+        }, function(ret, err){
+            getAnswer(1);
+        });
+        code = api.pageParam.code;
+        global_code = code;
+        answers = api.pageParam.answers;
+        cod = $api.byId('code');
+        cod.value = code;
+        wid = api.winWidth;
+        hei = api.winHeight;
+        openF(answers);
+    }
+
+    function openF(lists){
+        content = $api.byId('content');
+        api.openFrame({
+            name: 'answers',
+            url: 'frame11.html',
+            // bounces: false,
+            reload:true,
+            pageParam: {
+                'answers':lists,
+            },
+            rect: {
+                x: 0,
+                y: $api.offset(content).h,
+                w: wid,
+                h: hei - $api.offset(content).h
+            }
+        });
+    }
+
+    function getAnswer(typ){
+        var code = $api.byId('code').value;
+        var uri = 'reSearchAnswers'
+        if(typ != 1){
+            uri = 'answers'
+            if(code === global_code)
+                return;            
+        }
+
+        var com = api.pageParam.com;
+        var model = api.pageParam.model;
+        if(typ != 1){
+            if (code.match(/^[ ]*$/)) {
+                api.toast({
+                    msg: '请输入错误码',
+                    duration: 2000,
+                    location: 'top'
+                });
+                return;
+            }
+        }
+        var email = $api.getStorage('email');
+        if(typeof(email)!="undefined"){
+        
+        }
+        else
+            email = ' '
+        values = {}
+        if(typ != 1){
+            values.code = code;
+        }
+        else{
+            values.code = global_code;
+        }
+        values.com = com;
+        values.model = model;
+        values.email = email;
+        pwd = $api.getStorage('pwd1');
+        if(typeof(pwd) != 'undefined'){
+            values.is_login = '1'
+        }
+        else
+            values.is_login = '0'
+        AjaxPost(uri,'POST',values,showAnswers)
+    }
+
+    function showAnswers(lists){
+        global_code = $api.byId('code').value;
+        api.closeFrame({
+            name: 'answers'
+        });
+        openF(lists);
+    }
+</script>
+</html>

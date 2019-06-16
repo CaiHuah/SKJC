@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,width=device-width,initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title></title>
+    <link rel="stylesheet" href="../css/invitation.css" />
+    <script type="text/javascript" src="../script/api.js"></script>
+    <script type="text/javascript" src="../js/doT.min.js"></script>
+</head>
+<style>
+
+</style>
+
+
+<body>
+
+    <div id="artilce">
+
+    </div>
+
+
+    <script id="evaluationtmpl" type="text/x-dot-template">
+        <h2 id="title" class="mt10">{{= it['title']}}</h1>
+
+        <div id="content" style="font-size:20px">
+            {{= it['content']}}
+        </div>
+    </script>
+
+    <script>
+
+            apiready = function(){
+                api.sendEvent({
+                    name: 'changllcount',
+                });
+              var title = api.pageParam.title;
+              var content = api.pageParam.content;
+          
+              var infos = {}
+              infos.title = title;
+              infos.content = '<br/>' + content;
+          
+              tem = $api.byId('evaluationtmpl')
+              text = $api.text(tem)
+              var evalText = doT.template(text);
+              dom = $api.byId('artilce');
+              $api.append(dom,evalText(infos))
+              
+              resizephoto();
+            }
+          
+        function back(){
+                api.closeWin({
+                });
+        }
+          
+        function resizephoto(){
+            var dom = $api.byId('artilce');
+            var img = $api.domAll(dom, 'img');
+            for (var i = 0; i < img.length; i++){
+                var preWidth = $api.attr(img[i],'width');
+                var winWidth = api.winWidth;
+                if(!preWidth){
+                    var newWidth = winWidth-20;
+                    $api.attr(img[i], 'width', newWidth);
+                    continue;
+                }
+                preWidth = parseInt(preWidth);
+                if(preWidth > winWidth){
+                    var preHeight = $api.attr(img[i],'height');
+                    if(!preHeight){
+                        continue;
+                    }
+                    preHeight = parseInt(preHeight);
+                    var newWidth = winWidth-20;
+                    var newHeight = newWidth * preHeight / preWidth;
+                    $api.attr(img[i], 'width', newWidth);
+                    $api.attr(img[i], 'height', newHeight);
+                }
+            }
+        }
+    </script>
+
+</body>
+
+
+</html>

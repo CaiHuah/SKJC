@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,width=device-width,initial-scale=1.0" />
+    <title>Document</title>
+    <link rel="stylesheet" href="../css/retrieval.css" />
+</head>
+<body id="body">
+    <div class="regTop">
+        <a class="back" onclick="back()">&lt;&nbsp;返回</a>
+        <span></span>
+    </div>
+
+</body>
+</html>
+<script type="text/javascript" src="../script/api.js"></script>
+<script>
+	apiready = function (){
+        var coms = api.pageParam.coms;
+        var typ = api.pageParam.typ;
+        var body = $api.byId('body');
+        api.openFrame({
+					name:'retrieval',
+					url:'retrieval.html',
+					rect: {
+                        x: 0,
+                        y: $api.offset(body).h,
+                        w: api.winWidth,
+                        h: api.winHeight - $api.offset(body).h
+                    },
+                    pageParam:{
+                        'typ':typ,
+                        'coms':coms
+                    },  
+                    singleInstance:true,
+                    overScrollMode:'scrolls'
+			});
+	}
+	function back(){
+			api.closeWin({
+			});
+	}
+</script>

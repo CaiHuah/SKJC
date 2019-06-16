@@ -1,0 +1,233 @@
+* {
+    padding: 0;
+    margin: 0;
+}
+*, *::before, *::after {
+    -webkit-box-sizing: border-box;
+    box-sizing: border-box;
+}
+
+#header{
+    width: 100%;
+    /* border:1px dashed black; */
+}
+
+body {
+    /* -webkit-overflow-scrolling: touch; */
+    width: auto;
+    height: 100%;
+    /* -webkit-backface-visibility: hidden; */
+    /* -webkit-user-drag: none; */
+    overflow: hidden;
+    background-color: #ffffff;
+}
+.mescroll {
+    width: 100%;
+    height: 100%;
+    overflow-y: auto;
+    /* margin-top: 25px; */
+}
+
+.member-info {
+    margin-left: 5px;
+    margin-right: 5px;
+    position: relative;
+    background-image: url(../image/mine/003.jpg);
+    background-color: white;
+    height: 10rem;
+    width: 97%;
+    background-size: 100%;
+    border-radius: 10px;
+}
+.member-info img {
+    position: absolute;
+    display: block;
+    height: 5rem;
+    width: 5rem;
+    border: solid 2px #FFFFFF;
+    border-radius: 100%;
+    left: 2rem;
+    top: 3rem;
+}
+img {
+    border: 0;
+    vertical-align: middle;
+}
+.login_btn{
+    width: 10rem;
+    height: 2.45rem;
+    position: absolute;
+    top: 40%;
+    right: 10%;
+    display: block;
+    border: 0;
+    font-size: 1.3em;
+    color:#FFFFFF;
+    border-radius: 2em;
+    background: #746c67;
+    box-shadow: 0px 0px 20px #746c67;
+    text-align: center;
+    outline: none;
+}
+.login_btn1{
+    width: 5rem;
+    height: 2rem;
+    position: absolute;
+    top: 15%;
+    right: 6%;
+    display: block;
+    border: 0;
+    font-size: 0.8em;
+    color:#333;
+    border-radius: 2em;
+    opacity:0.7;
+    box-shadow: 0px 0px 20px #746c67;
+    text-align: center;
+    outline: none;
+}
+
+.username {
+    overflow: hidden;
+    position: absolute;
+    top: 4rem;
+    left: 8.3rem;
+}
+.un1 {
+    font-size: 1.4rem;
+    color: #333;
+    margin-right: 0.1rem;
+}
+/*.un2 {
+    font-size: 1.5rem;
+    color: #333;
+    float: left;
+    margin-top: 0.5rem;
+}*/
+.username p span {
+    font-size: 1.4rem;
+    color: #333;
+}
+
+.member-center {
+    background: #FFFFFF;
+    border-top-left-radius: 0.2rem;
+    border-top-right-radius: 0.2rem;
+    width: 100%;
+    padding-bottom: 50px;
+}
+
+
+.line {
+    width: 100%;
+    height: 20px;
+    background: #FFFFFF;
+    /* border-radius: 5px; */
+}
+
+.my-list {
+    display: flex;
+    margin: 1rem auto 1rem auto;
+}
+ul, ol {
+    list-style: none outside none;
+}
+ul, ol, li {
+    margin: 0;
+    padding: 0;
+}
+.my-list li {
+    flex: 1;
+    text-align: center;
+}
+.my-list li a {
+    display: block;
+    width: 100%;
+}
+.my-list img {
+    width: 1.7rem;
+}
+img {
+    border: 0;
+    vertical-align: middle;
+}
+.my-list li p {
+    color: #959595;
+    font-size: 0.8rem;
+    margin-top: 0.2rem;
+    line-height: 1.05rem;
+}
+
+
+
+.member-center .line-tit {
+    border-bottom: solid 1px #ececec;
+    background-color: #ececec;
+    border-radius: 10px;
+    width: 100%;
+    margin: 0;
+}
+.member-center h1 {
+    font-size: 2.25rem;
+    color: #000000;
+}
+.member-center .line-tit a {
+    font-size: 0.85rem;
+    color: #000000;
+    display: block;
+    width: 100%;
+    height: 2.25rem;
+    line-height: 2.25rem;
+    padding: 0 .8rem;
+}
+a {
+    background: transparent;
+    text-decoration: none;
+    -webkit-tap-highlight-color: transparent;
+    color: #666666;
+}
+.member-center .line-tit a span {
+    float: right;
+    color: #FFFFFF;
+    font-size: 0.6rem;
+    line-height: 2.25rem;
+}
+.member-center .line-tit a span.mui-icon-arrowright {
+    font-size: 1.2rem;
+    line-height: 2.25rem;
+
+}
+.mui-icon {
+    font-family: Muiicons;
+    font-size: 24px;
+    font-weight: 400;
+    font-style: normal;
+    line-height: 1;
+    display: inline-block;
+    text-decoration: none;
+    -webkit-font-smoothing: antialiased;
+}
+
+.down-nav {
+    display: flex;
+    background: white;
+    height: 59px;
+    border-radius: 10px;
+    border-top: solid 1.5px #b5b5b5;
+    position: fixed;
+    bottom: 0px;
+    width: 96%;
+}
+.down-nav li {
+    flex: 1;
+    text-align: center;
+    font-size: 12px;
+}
+.down-nav li a {
+    color: #959595;
+    font-size: 12px;
+}
+.down-nav img {
+    display: block;
+    margin: 8px auto 5px auto;
+    width: 22px;
+}

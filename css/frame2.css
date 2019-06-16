@@ -1,0 +1,231 @@
+* {
+    padding: 0;
+    margin: 0;
+}
+*, *::before, *::after {
+    -webkit-box-sizing: border-box;
+    box-sizing: border-box;
+}
+
+body {
+    /* border:1px dashed black; */
+    width: 100%;
+    height: 155px;
+    font-size: 16px;
+    line-height: 1.6;
+    word-wrap: break-word;
+    background-color: white;
+    text-rendering: optimizeLegibility;
+    -webkit-backface-visibility: hidden;
+    -webkit-user-drag: none;
+    overflow: hidden;
+    color: #333 !important;
+    -webkit-overflow-scrolling: touch;
+}
+
+.scroll {
+    position: absolute;
+    z-index: 0;
+    width: 100%;
+    height: 155px;
+}
+.aui-cell-input {
+    padding: 10px 15px 1px 15px;
+}
+.aui-cell-inputs {
+    border-radius: 5px;
+    background: #f0efef;
+}
+.aui-cell-inputs input {
+    padding: 10px 5px;
+    font-size: 12px;
+    width: 100%;
+}
+input {
+    -webkit-appearance: textfield;
+    background: none;
+    outline: none;
+    -webkit-rtl-ordering: logical;
+    user-select: text;
+    cursor: auto;
+    padding: 0;
+    border: 0;
+    font-size: 15px;
+    -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+}
+.panel-content{
+
+
+}
+.aui-cell-s {
+    padding: 10px 15px;
+    position: relative;
+    display: -webkit-box;
+    display: -webkit-flex;
+    display: flex;
+    -webkit-box-align: center;
+    -webkit-align-items: center;
+    align-items: center;
+}
+.aui-cell-s1 {
+    background-image: url("../image/l1.png");
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+    padding: 30px 0;
+    text-align: center;
+    color: #fff;
+    font-size: 12px;
+    -webkit-box-flex: 1;
+    -webkit-flex: 1;
+    flex: 1;
+    margin-right: 10px;
+}
+.aui-cell-s2 {
+    background-image: url("../image/l2.png");
+}
+.aui-cell-s3 {
+    background-image: url("../image/l3.png");
+    margin-right: 0px;
+}
+
+.line {
+    height: 8px;
+    background: #f5f5f5;
+    border-radius: 5px;
+    width: 100%;
+}
+
+.panel-cont-finance {
+    position: relative;
+    padding: 10px 15px;
+    display: flex;
+    width: 100%;
+    overflow: hidden;
+    align-content: center;
+    justify-content: space-between;
+}
+a {
+    text-decoration: none;
+    -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+    color: #646464;
+}
+.panel-cont-finance .panel-cont-left {
+    margin-right: 10px;
+    line-height: 0;
+}
+.item-ware-list .panel-cont-left img {
+    width: 130px;
+    height: 75px;
+}
+.panel-cont-finance .panel-cont-left img {
+    width: 150px;
+    height: 100px;
+}
+a img {
+    border: 0;
+}
+.panel-cont-finance .panel-cont-right {
+    display: block;
+    flex: 1;
+    position: relative;
+}
+.item-ware-list .panel-cont-right h2 {
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    word-break: break-all;
+    overflow: hidden;
+    height: 48px;
+    font-size: 14px;
+    color: #333333;
+}
+.panel-cont-finance .panel-cont-right h2 {
+    font-size: 16px;
+    font-weight: normal;
+}
+.item-ware-list .panel-cont-right h3 {
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    word-break: break-all;
+    overflow: hidden;
+    color: #666666;
+    font-size: 12px;
+    margin-top: 5px;
+}
+.panel-cont-finance .panel-cont-right h3 {
+    font-size: 12px;
+    margin-top: 10px;
+    font-weight: normal;
+    color: #333;
+    width: 100%;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 1;
+}
+.panel-cont-right h3 em {
+    border: 1px solid #ddd;
+    font-size: 11px;
+    border-radius: 3px;
+    padding: 1px 4px;
+}
+em, i {
+    font-style: normal;
+}
+.panel-cont-right h3 span {
+    padding-left: 20px;
+    text-align: right;
+}
+
+.morecontent{
+    text-align: center;
+    font-size: 17px;
+    font-style: italic;
+
+}
+
+.footer{
+  position: relative;
+  margin-left: 2%;
+}
+
+ul, ol {
+    list-style: none outside none;
+}
+ul, ol, li {
+    margin: 0;
+    padding: 0;
+}
+a {
+    background: transparent;
+    text-decoration: none;
+    -webkit-tap-highlight-color: transparent;
+    color: #666666;
+}
+.down-nav {
+    display: flex;
+    background: white;
+    height: 59px;
+    border-radius: 10px;
+    border-top: solid 1px #b5b5b5;
+    position: fixed;
+    bottom: 0px;
+    width: 96%;
+}
+.down-nav li {
+    flex: 1;
+    text-align: center;
+    font-size: 12px;
+}
+.down-nav li a {
+    color: #959595;
+    font-size: 12px;
+}
+.down-nav img {
+    display: block;
+    margin: 8px auto 5px auto;
+    width: 22px;
+}

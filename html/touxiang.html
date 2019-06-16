@@ -1,0 +1,226 @@
+<!DOCTYPE html>
+<head>
+  <meta name="viewport" content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,width=device-width,initial-scale=1.0"/>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <meta http-equiv="Cache-control" content="private, must-revalidate" />
+  <link rel="stylesheet" href="../css/touxiang.css" />
+  <script src='../js/setting.js' type='text/javascript'></script>
+<title></title>
+<style>
+
+</style>
+</head>
+<body>
+  <img id="backImg" hidden style="position: absolute;-webkit-filter:blur(40px);opacity:1;width:100%;height:100%;" src="../image/touxiang.png">
+  <div id="to" onclick="back()">
+    <img id="touxiang" hidden src="../image/touxiang.png" width="100%">
+  </div>
+  <button id="but" hidden onclick="selectpic()">选择图片</button>
+</body>
+</html>
+<script type="text/javascript" src="../script/api.js"></script>
+<script src="../js/retrieval.js" type="text/javascript"></script>
+<script src="../js/func.js" type="text/javascript"></script>
+<script>
+  apiready = function () {
+    setLoction();
+    tpFunc(funcall);
+  }
+
+  function tpFunc(callback){
+    var tx = api.getPrefs({
+        sync: true,
+        key: 'tx'
+    });
+
+    var backImg = document.getElementById("backImg");
+    var touxiang = document.getElementById("touxiang");
+    var pwd1 = $api.getStorage('pwd1');
+    if(typeof(pwd1)!="undefined"){
+      if(typeof(tx)!="undefined" && tx === '1'){
+        var email = $api.getStorage('email');
+        url = 'http://'+ DOMAIN + '/media/photos/' + email + '/tx.jpeg' + '?t='+Math.random();
+        api.imageCache({
+          url: url,
+          no_cache : true
+        }, function(ret, err) {
+          if(ret.status === true){
+            backImg.src = url;
+            touxiang.src = url;
+          }
+          callback(backImg,touxiang)
+        });
+      }
+      else
+        funcall(backImg,touxiang)
+    }
+    else
+      funcall(backImg,touxiang);
+
+   }
+
+   function funcall(backImg,touxiang){
+      var but = document.getElementById("but")
+      $api.removeAttr(backImg,'hidden')
+      $api.removeAttr(touxiang,'hidden')
+      $api.removeAttr(but,'hidden')
+   }
+
+  function saveImg(){
+    var FNImageClip = api.require('FNImageClip');
+    FNImageClip.save({
+        destPath: 'fs://SKJC/result.png',
+        copyToAlbum: false,
+        quality: 1
+    }, function(ret, err) {
+        if (ret) {
+          api.showProgress({
+            animationType: 'fade',
+            title: '先冷静下',
+            text: '先喝杯茶...',
+          });
+          var email = $api.getStorage('email');
+          var pwd = $api.getStorage('pwd1');
+          updataImg(ret.destPath,email,pwd);
+        } else {
+            // alert(JSON.stringify(err));
+        }
+    });
+  }
+  function setLoction(){
+    var backg = document.getElementById("to")
+    var but = document.getElementById("but")
+    var val1 = api.winWidth / 2 - 50
+    var val2 = api.winHeight / 2 - 50
+    var val3 = api.winHeight * 4 / 5
+    $api.css(backg,'position:absolute;left:' + val1 + 'px;top:' + val2 + 'px;');
+    $api.css(but,'position:absolute;left:' + (val1 - 15) + 'px;top:' + val3 + 'px;');
+  }
+  function back(){
+      api.closeWin({
+      });
+  }
+  function selectpic(){
+    var email = $api.getStorage('email');
+    var pwd = $api.getStorage('pwd1');
+    if(typeof(pwd)=="undefined"){
+      api.toast({
+        msg: '请先登录',
+        duration: 2000,
+        location: 'top'
+      });
+      return;
+    }
+    var pic = '';
+    api.getPicture({
+        sourceType: 'library',
+        encodingType: 'jpg',
+        mediaValue: 'pic',
+        allowEdit: true,
+        quality: 100,
+        // targetWidth: 200,
+        // targetHeight: 200,
+        saveToPhotoAlbum: false
+    }, function(ret, err) {
+        if (ret) {
+            var FNImageClip = api.require('FNImageClip');
+            FNImageClip.open({
+                rect: {
+                    x: 0,
+                    y: 0,
+                    w: api.winWidth,
+                    h: api.winHeight
+                },
+                srcPath: ret.data,
+                style: {
+                    mask: 'rgba(0,0,0,0.5)',
+                    clip: {
+                        w: 100,
+                        h: 100,
+                        x: 80,
+                        y: 250,
+                        // borderColor: '#0f0',
+                        borderWidth: 1,
+                        appearance: 'circular'
+                    }
+                },
+            }, function(ret, err) {
+                if (ret) {
+                  if(ret.status === true){
+                    api.openFrame({
+                        name: 'button',
+                        url: 'button.html',
+                        rect: {
+                            x: api.winWidth / 2 - 65,
+                            y: api.winHeight * 7 / 8,
+                            w: 130,
+                            h: 40
+                        },
+                    });
+                  }
+                } else {
+                    // alert(JSON.stringify(err));
+                }
+            });
+
+        } else {
+            // alert(JSON.stringify(err));
+        }
+    });
+  }
+  function updataImg(path,email,pwd){
+     api.ajax({
+              method:"post",
+              url:'http://' + DOMAIN +'/updataTx/',
+              data:{
+                files: {
+                  pic:path
+                },
+                values:{
+                  'email':email,
+                  'pwd':pwd
+                }
+              },
+              dataType:'json',
+              async:true,
+            },function(ret,err){
+              if(ret.result==='success!'){
+                api.closeFrame({
+                  name : 'button'
+                })
+                var src = 'http://' + DOMAIN + '/' + ret.img  + '?t='+Math.random();
+                var backImg = document.getElementById("backImg")
+                backImg.src = src;
+                var tx = document.getElementById("touxiang")
+                tx.src = src;
+                is_tx(email,pwd,txyz);
+              }else {
+                if(ret.result === 'failed!')
+                  api.toast({
+                      msg: '上传头像失败!',
+                      duration: 2000,
+                      location: 'top'
+                  });
+                else{
+                  api.toast({
+                      msg: '网络不给力!',
+                      duration: 2000,
+                      location: 'bottom'
+                  });
+                }
+              }
+              // 成功后删除加载中
+              api.hideProgress();
+            });
+  }
+  function txyz(){
+    api.sendEvent({
+          name: 'reload',
+          extra: {
+              state: 'no'
+          }
+      });
+      var FNImageClip = api.require('FNImageClip');
+      FNImageClip.close();
+  }
+</script>

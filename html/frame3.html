@@ -1,0 +1,274 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,width=device-width,initial-scale=1.0"/>
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>我的</title>
+    <link rel="stylesheet" href="../css/mine.css" />
+    <script src='../js/setting.js' type='text/javascript'></script></head>
+<style>
+
+</style>
+
+<body id="body" hidden>
+  <header id="header"></header>
+  <div class="mescroll" id="mine">
+    <div class="member-info" id="member-info">
+       <img id="TX" onclick="opentx()" src="../image/touxiang.png" >
+       <input id="loginbut" class="login_btn" type="button" value="立即登录" onclick=openlogin()>
+
+    </div>
+  </div>
+
+  <div class="member-center">
+
+
+    <div class="line"></div>
+
+    <div class="line"></div>
+
+    <h1 class="line-tit" onclick="openlljl()">
+      <a>
+        浏览记录
+        <span class="mui-icon mui-icon-arrowright">&nbsp;&nbsp;&gt;</span>
+      </a>
+    </h1>
+
+    <div class="line"></div>
+
+    <h1 class="line-tit" onclick="openMysc()">
+      <a>
+        我的收藏
+        <span class="mui-icon mui-icon-arrowright">&nbsp;&nbsp;&gt;</span>
+      </a>
+    </h1>
+
+    <div class="line"></div>
+
+    <!-- <h1 class="line-tit" onclick="openWindow('jd.html')">
+      <a>
+        分享有礼
+        <span class="mui-icon mui-icon-arrowright">&nbsp;&nbsp;&gt;</span>
+      </a>
+    </h1> -->
+
+    <div class="line"></div>
+
+    <h1 class="line-tit" onclick="openWindow('callus.html')">
+      <a>
+        联系我们
+        <span class="mui-icon mui-icon-arrowright">&nbsp;&nbsp;&gt;</span>
+      </a>
+    </h1>
+
+    <div class="line"></div>
+
+    <h1 class="line-tit" onclick="openWindow('accountset.html')">
+      <a>
+        设置中心
+        <span class="mui-icon mui-icon-arrowright">&nbsp;&nbsp;&gt;</span>
+      </a>
+    </h1>
+
+
+  </div>
+
+
+
+  <script id="evaluationtmpl" type="text/x-dot-template">
+  <div id="user_zl">
+    <div class="username">
+      <p class="un1">{{= it }}</p>
+      <p class="un1"></p> 
+    </div>
+
+    <input class="login_btn1" type="button" value="编辑资料">
+  </div>
+  </script>
+  <script type="text/javascript" src="../js/doT.min.js"></script>
+  <script type="text/javascript" src="../script/api.js"></script>
+  <script type="text/javascript" src="../js/func.js"></script>
+  <script>
+  apiready = function () {
+    api.addEventListener({
+        name: 'reload'
+    }, function(ret, err) {
+        if (ret.value.state == 'no') {
+          refreshpage();
+        }
+    });
+    is_show();
+    txFunc();
+   }
+
+   function is_show(){
+      var user = $api.getStorage('user');
+      var pwd1 = $api.getStorage('pwd1');
+      if(typeof(pwd1) != "undefined"){
+          loginbut = $api.byId('loginbut');
+          $api.remove(loginbut);
+          tem = $api.byId('evaluationtmpl');
+          text = $api.text(tem);
+          var evalText = doT.template(text);
+          var content = $api.byId('member-info');
+          $api.append(content,evalText(user));
+      }
+   }
+
+   function txFunc(){
+    var tx = api.getPrefs({
+        sync: true,
+        key: 'tx'
+    });
+    var pwd1 = $api.getStorage('pwd1');
+    if(typeof(pwd1)!="undefined"){
+      if(typeof(tx)!="undefined" && tx === '1'){
+        var email = $api.getStorage('email');
+        var txx = document.getElementById("TX");
+        var url = 'http://' + DOMAIN + '/media/photos/' + email + '/tx.jpeg' + '?t='+Math.random();
+        // api.imageCache({
+        //   url: url,
+        //   no_cache : true,
+        // }, function(ret, err) {
+        //   if(ret.status === true){
+        //     txx.src = url;
+        //   }
+          txx.src = url;
+          Funcall();
+        // });
+      }
+      else
+        Funcall();
+    }
+    else
+    Funcall();
+   }
+
+   function Funcall(){
+    var body = document.getElementById("body");
+    $api.removeAttr(body,'hidden');
+   }
+
+  function refreshpage() {
+    var txx = document.getElementById("TX");
+    var tx = api.getPrefs({
+        sync: true,
+        key: 'tx'
+    });
+    var pwd = $api.getStorage('pwd1');
+    if(typeof(tx)!="undefined" && tx === '1' && typeof(pwd) != "undefined"){
+      var email = $api.getStorage('email');
+      txx.src = 'http://' + DOMAIN + '/media/photos/' + email + '/tx.jpeg?t='+Math.random();
+    }
+    else
+      txx.src = "../image/touxiang.png"
+
+    var user = $api.getStorage('user');
+    var pwd1 = $api.getStorage('pwd1');
+    if(typeof(pwd1) != "undefined"){
+        loginbut = $api.byId('loginbut');
+        $api.remove(loginbut);
+        user_zl = $api.byId('user_zl');
+        $api.remove(user_zl);
+        tem = $api.byId('evaluationtmpl');
+        text = $api.text(tem);
+        var evalText = doT.template(text);
+        var content = $api.byId('member-info');
+        $api.append(content,evalText(user));
+    }
+    else{
+        user_zl = $api.byId('user_zl');
+        var content = $api.byId('member-info');
+        $api.remove(user_zl);
+        $api.append(content,'<input id="loginbut" class="login_btn" type="button" value="立即登录" onclick=openlogin()>');
+    }
+  };
+
+  function openlogin() {
+    var email = $api.getStorage('email');
+    var pwd = $api.getStorage('pwd');
+    var pageParam1 = {}
+    if(typeof(email)!="undefined" && typeof(pwd)!="undefined"){
+      pageParam1.email1 = email
+      pageParam1.pwd = pwd
+    }
+    else if(typeof(email)!="undefined" && typeof(pwd)=="undefined"){
+      pageParam1.email1 = email
+      pageParam1.pwd = 0
+    }
+    else{
+      pageParam1.email1 = 0
+      pageParam1.pwd = 0
+    }
+    api.openWin({
+      name:'login',
+      url:'login.html',
+      pageParam : {
+        'email1':pageParam1.email1,
+        'pwd':pageParam1.pwd
+      },
+      allowEdit:true,
+      animation:{
+        type:'movein',
+        duration:300
+      }
+    });
+  }
+  function openWindow(url) {
+    // var name = str.replace('.html','');
+    // alert(name)
+    api.openWin({
+      name:url,
+      url:url,
+      // bounces：false
+    });
+  }
+
+  function opentx(){
+    api.openWin({
+      name:'touxiang',
+      url:'touxiang.html',
+      animation:{
+        type:"movein",                
+        subType:"from_right",      
+        duration:300  
+      }
+      // bounces：false
+    });
+  }
+
+  function openMysc(){
+    api.openWin({
+            name: 'myschead',
+            url: 'myschead.html',
+            bounces: false,
+        });
+  }
+
+  function openlljl(){
+    api.openWin({
+            name: 'lljlhead',
+            url: 'lljlhead.html',
+            bounces: false,
+        });
+  }
+
+  function openredact(){
+        api.openWin({
+            name: 'redact',
+            url: 'redact.html',
+            bounces: false,
+        });
+  }
+
+  </script>
+
+
+
+
+
+</body>
+
+</html>

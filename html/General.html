@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,width=device-width,initial-scale=1.0"/>
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>通用</title>
+    <link rel="stylesheet" href="../css/callus.css" />
+    <link rel="stylesheet" href="../css/accountset.css" />
+
+</head>
+<style>
+
+</style>
+
+
+<body>
+
+	<div class="regTop">
+      <a class="back" onclick="back()">&lt;&nbsp;返回</a>
+      <span></span>
+  </div>
+
+	<div id="setting">
+		<div class="member-center set-page">
+			<h1 class="line-tit">
+				<a>横屏模式
+          <span class="mui-icon mui-icon-arrowright"></span>
+					<span>开启＞</span>
+				</a>
+			</h1>
+			<h1 class="line-tit">
+				<a href="javascript:void(0);">
+					多语言
+					<span class="mui-icon mui-icon-arrowright"></span>
+					<span>中文简体＞</span>
+				</a>
+			</h1>
+
+			<div class="line"></div>
+
+
+      <h1 class="line-tit">
+        <a href="javascript:void(0);">
+           字体大小
+        <span class="mui-icon mui-icon-arrowright"></span>
+        <span>＞</span>
+       </a>
+     </h1>
+
+			<h1 class="line-tit">
+				<a href="javascript:void(0);">
+					发现页管理
+					<span class="mui-icon mui-icon-arrowright"></span>
+					<span>＞</span>
+				</a>
+			</h1>
+
+			<h1 class="line-tit">
+				<a href="javascript:void(0);">
+					辅助功能
+					<span class="mui-icon mui-icon-arrowright"></span>
+					<span>＞</span>
+				</a>
+			</h1>
+
+
+		<h1 class="line-tit">
+			<a href="javascript:void(0);">
+				存储空间
+				<span>1.5.2</span>
+			</a>
+		</h1>
+
+
+		<div class="line"></div>
+
+
+
+
+
+
+
+
+</body>
+
+</html>
+<script type="text/javascript" src="../script/api.js"></script>
+<script>
+	apiready = function (){
+
+	}
+	function back(){
+			api.closeWin({
+			});
+	}
+	function logOut(){
+		$api.rmStorage('pwd1');
+		$api.rmStorage('pwd');
+		api.removePrefs({
+				key: 'tx'
+		});
+		api.sendEvent({
+				name: 'reload',
+				extra: {
+						state: 'no'
+				}
+		});
+		alert('退出登录成功!');
+	}
+</script>

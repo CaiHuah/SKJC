@@ -1,0 +1,216 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,width=device-width,initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>首页</title>
+    <link rel="stylesheet" href="../css/retrieval.css" />
+    <script src="http://code.jquery.com/jquery-latest.js"></script>
+    <script src="../js/sortUnicode.js" type="text/javascript"></script>
+</head>
+
+<body>
+  <!--选择品牌-->
+  <div class="container">
+
+  <div class="brandsite">
+    <div class="brand-list"><span class="brand-letter" id="A1">A</span>
+
+    </div>
+    <div class="brand-list"><span class="brand-letter" id="B1">B</span>
+
+    </div>
+    <div class="brand-list"><span class="brand-letter" id="C1">C</span>
+
+    </div>
+    <div class="brand-list"><span class="brand-letter" id="D1">D</span>
+
+    </div>
+    <div class="brand-list"><span class="brand-letter" id="E1">E</span>
+
+    </div>
+    <div class="brand-list"><span class="brand-letter" id="F1">F</span>
+
+    </div>
+    <div class="brand-list"><span class="brand-letter" id="G1">G</span>
+
+    </div>
+    <div class="brand-list"><span class="brand-letter" id="H1">H</span>
+
+    </div>
+    <div class="brand-list"><span class="brand-letter" id="J1">J</span>
+
+    </div>
+    <div class="brand-list"><span class="brand-letter" id="K1">K</span>
+
+    </div>
+    <div class="brand-list"><span class="brand-letter" id="L1">L</span>
+
+    </div>
+    <div class="brand-list"><span class="brand-letter" id="M1">M</span>
+
+    </div>
+    <div class="brand-list"><span class="brand-letter" id="N1">N</span>
+
+    </div>
+    <div class="brand-list"><span class="brand-letter" id="P1">P</span>
+
+    </div>
+    <div class="brand-list"><span class="brand-letter" id="Q1">Q</span>
+
+    </div>
+    <div class="brand-list"><span class="brand-letter" id="R1">R</span>
+
+    </div>
+    <div class="brand-list"><span class="brand-letter" id="S1">S</span>
+
+    </div>
+    <div class="brand-list"><span class="brand-letter" id="T1">T</span>
+
+    </div>
+    <div class="brand-list"><span class="brand-letter" id="W1">W</span>
+
+    </div>
+    <div class="brand-list"><span class="brand-letter" id="X1">X</span>
+
+    </div>
+    <div class="brand-list"><span class="brand-letter" id="Y1">Y</span>
+
+    </div>
+    <div class="brand-list"><span class="brand-letter" id="Z1">Z</span>
+
+    </div>
+    <div class="clear"></div>
+    <p class="contact" style="color:#000">若未找到请自定义输入厂商...</p>
+    
+    <div class="sousuo-top">
+				<a class="sousuo-t1" ></a>
+				<span class="sousuo-t2">
+					<input type="text" placeholder="输入厂商...">
+				</span>
+				<a class="sousuo-t3">| 确定</span>
+			</div>
+   
+  </div>
+  <div class="letter">
+    <ul>
+      <li><a href="javascript:;">A</a></li>
+      <li><a href="javascript:;">B</a></li>
+      <li><a href="javascript:;">C</a></li>
+      <li><a href="javascript:;">D</a></li>
+      <li><a href="javascript:;">E</a></li>
+      <li><a href="javascript:;">F</a></li>
+      <li><a href="javascript:;">G</a></li>
+      <li><a href="javascript:;">H</a></li>
+      <li><a href="javascript:;">J</a></li>
+      <li><a href="javascript:;">K</a></li>
+      <li><a href="javascript:;">L</a></li>
+      <li><a href="javascript:;">M</a></li>
+      <li><a href="javascript:;">N</a></li>
+      <li><a href="javascript:;">P</a></li>
+      <li><a href="javascript:;">Q</a></li>
+      <li><a href="javascript:;">R</a></li>
+      <li><a href="javascript:;">S</a></li>
+      <li><a href="javascript:;">T</a></li>
+      <li><a href="javascript:;">W</a></li>
+      <li><a href="javascript:;">X</a></li>
+      <li><a href="javascript:;">Y</a></li>
+      <li><a href="javascript:;">Z</a></li>
+    </ul>
+  </div>
+</div>
+<script type="text/javascript" src="../script/api.js"></script>
+<script type="text/javascript">
+  //选择品牌 start
+  
+      apiready = function() {
+            var coms = api.pageParam.coms;
+            var typ = api.pageParam.typ;
+            var arrs = getoneword(coms);
+            if(typ == 2){
+              var dom = document.getElementsByClassName('contact')[0];
+              dom.innerHTML = "若未找到请自定义输入型号...";
+            }
+            sortcoms(coms,arrs);
+      }
+      
+      $('body').on('click', '.letter a', function () {
+        var s = $(this).html();
+        $(window).scrollTop($('#' + s + '1').offset().top);
+      });
+
+      function insertHtml(dom){
+        com = dom.innerHTML;
+        typ = api.pageParam.typ;
+        api.sendEvent({
+            name: 'getcom',
+            extra: {
+                state: 'no',
+                typ:typ,
+                com:com
+            }
+        });
+        api.closeWin({
+          name:"companies"
+			  });
+      }
+
+      function sortcoms(coms,arrs){
+        var coms = api.pageParam.coms;
+        var arrs = getoneword(coms);
+        var inf = {};
+        for (var i = 0; i < 26; i++) {
+          var zm = String.fromCharCode((65 + i));
+          inf[zm] = []
+          for(var a in arrs){
+            if(arrs[a] === zm){
+              inf[zm].push(coms[a]);
+            }
+          }
+        }
+        for(var key in inf){
+          var dom = document.getElementById(key + '1');
+          if(inf[key].length === 0){
+            par = $api.closest(dom,'.brand-list');
+            $api.attr(par,'hidden',true);
+          }
+          for(var val in inf[key]){
+            var str = "<p onclick='insertHtml(this)'>" + inf[key][val] + "</p>"
+             $api.append(dom,str);
+          }
+           
+        }
+      }
+  
+      function getoneword(str){                //得到一串首字母数组
+              var isEnglishOrNum =  /^[A-Za-z0-9]+$/;            //正则验算是否英文字母或数字
+              var arr = [];        //存储各字符串首字母
+              var j = 0;
+              for(var i=0;i<str.length;i++){
+                  if(Object.prototype.toString.call(str[i]) === "[object String]"){        //判断是否为字符串
+                      var sing = str[i].substring(0,1);    //截取字符串首个字符
+                      var ch = str[i].charCodeAt(0);        //获取字符对应Unicode编码值
+                      if(isEnglishOrNum.test(sing)){        //判断是否为英文字母或数字
+                          arr[j++] = sing.toUpperCase();        //是则将字符赋值给数组
+                      }else{
+                          
+                          if(ch<40869&&ch>=19968){            //判断字符编码值在19968到40869之间
+                              arr[j++]=strChineseFirstPY.charAt(ch-19968);            //获取对应表中的字母并赋值到数组        
+                          }else{
+                              alert("字符串首字母仅支持字母和数字");
+                              return false;
+                          }
+                      }
+                  }else{
+                      alert("请检查您输入的字符串数组是否有误");
+                      return false;
+                  }
+              }
+              return arr;
+          }
+  </script>
+</body>
+
+</html>

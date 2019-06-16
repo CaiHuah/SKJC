@@ -1,0 +1,118 @@
+body {
+    background: #FFFFFF;
+    min-width: 320px;
+    overflow-x: hidden;
+    -webkit-overflow-scrolling: touch;
+}
+body, div, input, a {
+    padding: 0;
+    margin: 0;
+    list-style: none;
+}
+.regTop{
+    width: 100%;
+    padding:8% 0 6%;
+    background: #50b4f9;
+    text-align: center;
+    color: #ffffff;
+    position: relative;
+}
+.back{
+    position: absolute;
+    left: 5%;
+    top: 50%;
+    color: #ffffff;
+}
+.sousuo-wear {
+    max-width: 640px;
+    overflow: hidden;
+    margin: 0 auto;
+}
+.sousuo-top {
+    position: fixed;
+    width: 100%;
+    height: 45px;
+    line-height: 45px;
+    z-index: 9999;
+    top: 58px;
+    left: 0px;
+    color: #333;
+    background: #FFFFFF;
+    text-align: center;
+    border-bottom: 1px solid #DFDFDF;
+    border-top: 1px solid #DFDFDF;
+}
+.sousuo-t1 {
+    background: url(../image/) no-repeat 15px center;
+    background-size: 25%;
+}
+.sousuo-t1, .sousuo-t3 {
+    width: 20%;
+    height: 45px;
+    line-height: 45px;
+    font-size: 14px;
+}
+.sousuo-t1, .sousuo-t2, .sousuo-t3 {
+    float: left;
+}
+a {
+    text-decoration: none;
+    outline: none;
+    color: #232326;
+    color: gray;
+}
+.sousuo-t2 {
+    width: 60%;
+    height: 45px;
+    line-height: 45px;
+    font-size: 16px;
+}
+.sousuo-t2 input {
+    float: left;
+    width: 95%;
+    height: 15px;
+    font-size: 12px;
+    line-height: 15px;
+    color: #757575;
+    padding-left: 4%;
+    margin-top: 15px;
+    border: none;
+    border-left: 1px solid #D1D1D1;
+}
+:focus {
+    outline: 0;
+}
+input {
+    outline: none;
+    border-radius: 0px;
+    border: none;
+}
+.sousuo-t3 {
+    background: url(../image/) no-repeat 80% center;
+    background-size: 28%;
+    color: gray;
+}
+.sousuo-mid {
+    width: 100%;
+    margin-top: 106px;
+    position: absolute;
+    top: 0px;
+}
+.sousuo-tit {
+    float: left;
+    width: 90%;
+    padding: 0 5%;
+    line-height: 45px;
+    font-size: 14px;
+    color: #757575;
+    background: #F4F4F4;
+}
+.sousuo-jl1 {
+    float: left;
+    width: 90%;
+    padding: 0 5%;
+    line-height: 45px;
+    font-size: 14px;
+    color: #757575;
+    border-bottom: 1px solid #F4F4F4;
+}

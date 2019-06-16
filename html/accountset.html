@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,width=device-width,initial-scale=1.0"/>
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>我的</title>
+    <link rel="stylesheet" href="../css/callus.css" />
+    <link rel="stylesheet" href="../css/accountset.css" />
+
+</head>
+<style>
+
+</style>
+
+
+<body>
+
+	<div class="regTop">
+      <a class="back" onclick="back()">&lt;&nbsp;返回</a>
+      <span></span>
+  </div>
+
+	<div id="setting">
+		<div class="member-center set-page">
+			<h1 class="line-tit">
+				<a id="Count">当前账号
+					<span onclick="openlogin()">切换＞</span>
+				</a>
+			</h1>
+			<h1 class="line-tit">
+				<a href="javascript:void(0);">
+					微信绑定
+					<span class="mui-icon mui-icon-arrowright"></span>
+					<span>已绑定</span>
+				</a>
+			</h1>
+
+			<div class="line"></div>
+
+
+      <h1 class="line-tit">
+        <a href="javascript:void(0);">
+           登录密码
+        <span class="mui-icon mui-icon-arrowright"></span>
+        <span onclick="openRess()">修改</span>
+       </a>
+     </h1>
+
+			<h1 class="line-tit">
+				<a href="javascript:void(0);">
+					通用
+					<span class="mui-icon mui-icon-arrowright"></span>
+					<span onclick="openGeneral()">＞</span>
+				</a>
+			</h1>
+
+			<h1 class="line-tit">
+				<a href="javascript:void(0);">
+					隐私
+					<span class="mui-icon mui-icon-arrowright"></span>
+					<span>＞</span>
+				</a>
+			</h1>
+
+
+		<h1 class="line-tit">
+			<a href="javascript:void(0);">
+				当前版本
+				<span>1.5.2</span>
+			</a>
+		</h1>
+
+
+		<div class="line"></div>
+
+	</div>
+				<a class="r-btn" onclick="logOut()" href="javascript:void(0);">退出登录</a>
+	</div>
+
+
+
+
+
+
+
+</body>
+
+</html>
+<script type="text/javascript" src="../script/api.js"></script>
+<script>
+	apiready = function (){
+		if_count();
+		api.addEventListener({
+					name: 'reload'
+			}, function(ret, err){
+				try {
+							if_count();
+					} catch(err) {
+
+					}
+			});
+	}
+
+	function if_count(){
+		email = $api.getStorage('email');
+		pwd = $api.getStorage('pwd1');
+		if(typeof(email) != 'undefined' && typeof(pwd) != 'undefined'){
+			Count = $api.byId('Count');
+			$api.html(Count,'');
+			$api.html(Count,'当前账号' + '<em>(' + email + ')</em>' + '<span onclick="openlogin()">切换＞</span>');
+		}
+		else{
+			Count = $api.byId('Count');
+			$api.html(Count,'');
+			$api.html(Count,'当前账号' + '<span onclick="openlogin()">切换＞</span>');
+		}
+	}
+
+	function back(){
+			api.closeWin({
+			});
+	}
+	function logOut(){
+		pwd1 = $api.getStorage('pwd1');
+		if(typeof(pwd1) == 'undefined'){
+			api.toast({
+				msg: '当前未登录!',
+				duration: 2000,
+				location: 'bottom'
+			});
+			return;
+		}
+		$api.rmStorage('pwd1');
+		$api.rmStorage('pwd');
+		$api.rmStorage('user');
+		api.removePrefs({
+				key: 'tx'
+		});
+		api.sendEvent({
+				name: 'reload',
+				extra: {
+						state: 'no'
+				}
+		});
+		api.toast({
+			msg: '退出登录成功!',
+			duration: 2000,
+			location: 'bottom'
+		});
+	}
+
+  function openlogin() {
+    var email = $api.getStorage('email');
+    var pwd = $api.getStorage('pwd');
+    var pageParam1 = {}
+    if(typeof(email)!="undefined" && typeof(pwd)!="undefined"){
+      pageParam1.email1 = email
+      pageParam1.pwd = pwd
+    }
+    else if(typeof(email)!="undefined" && typeof(pwd)=="undefined"){
+      pageParam1.email1 = email
+      pageParam1.pwd = 0
+    }
+    else{
+      pageParam1.email1 = 0
+      pageParam1.pwd = 0
+    }
+    api.openWin({
+      name:'login',
+      url:'login.html',
+      pageParam : {
+        'email1':pageParam1.email1,
+        'pwd':pageParam1.pwd
+      },
+      allowEdit:true,
+      animation:{
+        type:'movein',
+        duration:300
+      }
+    });
+	}
+	
+	function openGeneral(){
+		api.openWin({
+      name:'General',
+      url:'General.html',
+    });
+	}
+
+	function openRess(){
+		api.openWin({
+      name:'repass',
+      url:'repass.html',
+    });
+	}
+
+</script>

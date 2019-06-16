@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,width=device-width,initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>首页</title>
+    <link rel="stylesheet" href="../css/homePage.css" />
+    <script src="../js/requests.js" type="text/javascript"></script>
+    <script src='../js/setting.js' type='text/javascript'></script>
+</head>
+
+<body>
+    <div class="content">
+
+        <form action="#">
+            <div class="message">
+                <input id="code" type="text" placeholder="&nbsp;&nbsp;&nbsp;请输入错误码" required/>
+                <a class="code" href="#" onclick="getAnswer(showAnswers)" required>搜索</a>
+            </div>
+        </form>
+    </div>
+    <form name="m">
+        <div class="middle_top">
+
+            <div class="brand">
+                <p class="brand_1">厂商&nbsp;</p>
+          <input id="com" class="brand_2" type="button" name="optBrand" onclick="selectCom()" value="--请选择--">
+          </a>
+            </div>
+            <div class="model">
+                <p class="model_1">型号&nbsp;</p>
+                <input id="model" class="model_2" type="button" name="optModel" onclick="selectMod()" value="--请选择--">
+                <!-- <select class="model_2" name="optModel">
+            <option>--请选择--</option>
+          </select> -->
+
+            </div>
+
+
+        </div>
+    </form>
+
+    <div class="middle_middle">
+        <p>热门问题</p>
+        <hr />
+    </div>
+    <script>
+            src = 'http://' + DOMAIN + '/media/data/NcDATA.js';
+            jstext = '<script src=' + src +' type="text/javascript">' + '\<\/script>';
+            document.write(jstext);
+            if(typeof(com_mod)=="undefined"){ 
+                document.write("<script type=\"text/javascript\" src=\"../js/dataCom.js\"><\/script>")
+            }
+    </script>
+</body>
+</html>
+
+<script type="text/javascript" src="../script/api.js"></script>
+<script>
+    apiready = function() {
+        api.addEventListener({
+            name: 'getcom'
+        }, function(ret, err) {
+            if (ret.value.state == 'no') {
+                if(ret.value.typ == 1){
+                    document.m.optBrand.value = ret.value.com;
+                    document.m.optModel.value = "--请选择--";
+                }
+                else
+                    document.m.optModel.value = ret.value.com;
+            }
+        });
+    }
+
+    function getAnswer(callback){
+        var code = $api.byId('code').value;
+        var com = $api.byId('com').value;
+        var model = $api.byId('model').value;
+        if (code.match(/^[ ]*$/)) {
+            api.toast({
+                msg: '请输入错误码',
+                duration: 2000,
+                location: 'top'
+            });
+            return;
+        }
+        var email = $api.getStorage('email');
+        if(typeof(email)!="undefined"){
+        
+        }
+        else
+            email = ' ';
+        values = {};
+        values.code = code;
+        values.com = com;
+        values.model = model;
+        values.email = email;
+        pwd = $api.getStorage('pwd1');
+        if(typeof(pwd) != 'undefined'){
+            values.is_login = '1'
+        }
+        else
+            values.is_login = '0'
+        AjaxPost('answers','POST',values,showAnswers)
+    }
+
+    function showAnswers(lists){
+        var code = $api.byId('code').value;
+        var com = $api.byId('com').value;
+        var model = $api.byId('model').value;
+        api.openWin({
+            name: 'queshead',
+            url: 'queshead.html',
+            bounces: false,
+            pageParam: {
+                'code':code,
+                'answers':lists,
+                'com':com,
+                'model':model
+            }
+        });
+    }
+
+    function selectCom(){
+        var coms = []
+        for(var name in com_mod){
+            if(name === "--请选择--"){
+                continue;
+            }
+            coms.push(name);
+        }
+        api.openWin({
+            name:'companies',
+            url:'companies.html',
+            pageParam : {
+                'typ':1,
+                'coms':coms,
+            }
+        });
+    }
+
+    function selectMod(){
+        var com = document.m.optBrand.value;
+        if(com === "--请选择--"){
+            api.toast({
+                msg: '请先选择厂商!',
+                duration: 2000,
+                location: 'top'
+            });
+            return;
+        }
+        var mods = []
+        for(var i=0;i<com_mod[com].length;i++){
+            mods.push(com_mod[com][i]);
+        }
+        api.openWin({
+            name:'companies',
+            url:'companies.html',
+            pageParam : {
+                'typ':2,
+                'coms':mods,
+            }
+        });
+    }
+
+</script>

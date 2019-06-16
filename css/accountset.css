@@ -1,0 +1,112 @@
+* {
+    -webkit-box-sizing: border-box;
+    box-sizing: border-box;
+    -webkit-user-select: none;
+    outline: 0;
+    -webkit-tap-highlight-color: transparent;
+    -webkit-tap-highlight-color: transparent;
+}
+
+body{
+  -webkit-overflow-scrolling: touch;
+}
+.regTop{
+    width: 100%;
+    padding:8% 0 6%;
+    background: #50b4f9;
+    text-align: center;
+    color: #ffffff;
+    position: relative;
+}
+.xiugai{
+    position: absolute;;
+    left: 90px;
+    color: #999;
+    display:inline-block;
+}
+.member-center .line-tit a span {
+    float: right;
+    color: #bbbbbb;
+    font-size: 0.6rem;
+    line-height: 2.8rem;
+}
+
+.back{
+    position: absolute;
+    left: 5%;
+    top: 50%;
+    color: #ffffff;
+}
+a {
+    background: transparent;
+    text-decoration: none;
+    -webkit-tap-highlight-color: transparent;
+    color: #666666;
+    text-decoration: none;
+/*  color: #007aff;*/
+}
+.set-page {
+    width: 100%;
+    position: static;
+    padding-bottom: 0px;
+}
+.member-center {
+    background: #FFFFFF;
+    border-top-left-radius: 0.2rem;
+    border-top-right-radius: 0.2rem;
+    width: 100%;
+    padding-bottom: 50px;
+}
+.member-center .line-tit {
+    border-bottom: solid 1px #ececec;
+    width: 100%;
+    margin: 0;
+}
+.set-page h1 {
+    padding-bottom: 0px;
+    font-size: 0.75rem;
+    margin: 0;
+    font-weight: normal;
+    line-height:1;
+
+}
+.member-center .line-tit a {
+    font-size: 0.85rem;
+    color: #000000;
+    display: block;
+    width: 100%;
+    height: 2.8rem;
+    line-height: 2.8rem;
+    padding: 0 .8rem;
+}
+a {
+    background: transparent;
+    text-decoration: none;
+    -webkit-tap-highlight-color: transparent;
+    color: #666666;
+}
+.set-page .line-tit a span {
+    float: right;
+    color: #666666;
+    font-size: 0.6rem;
+    line-height: 2.8rem;
+}
+.member-center .line-tit a span {
+    float: right;
+    color: #bbbbbb;
+    font-size: 0.6rem;
+    line-height: 2.8rem;
+}
+.r-btn {
+    font-size: 0.9rem;
+    width: 14.5rem;
+    text-align: center;
+    height: 2.45rem;
+    line-height: 2.45rem;
+    border-radius: 2.45rem;
+    color: #fff;
+    background-image: -webkit-linear-gradient(left, #00cbff, #10bcfd,#2ea0fb,#2f9ffb,#418efa);
+    display: block;
+    box-shadow: 0px 0px 20px #00cbff;
+    margin: 1.5rem auto 0 auto;
+}

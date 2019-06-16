@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,width=device-width,initial-scale=1.0"/>
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>我的</title>
+    <link rel="stylesheet" href="../css/callus.css" />
+    <link rel="stylesheet" href="../css/accountset.css" />
+
+</head>
+<style>
+
+</style>
+
+
+<body>
+
+	<div class="regTop">
+      <a class="back" onclick="back()">&lt;&nbsp;返回</a>
+      <span></span>
+  </div>
+
+	<div id="setting">
+		<div class="member-center set-page">
+			<h1 class="line-tit">
+				<a>昵称
+          <p class="xiugai">菜鸟小分队</p>
+					<span>＞</span>
+				</a>
+			</h1>
+			<h1 class="line-tit">
+				<a href="javascript:void(0);">
+					个性签名
+          <p class="xiugai">无</p>
+					<span class="mui-icon mui-icon-arrowright"></span>
+					<span>＞</span>
+				</a>
+			</h1>
+
+			<div class="line"></div>
+
+
+      <h1 class="line-tit">
+        <a href="javascript:void(0);">
+           生日
+           <p class="xiugai">2019-11-8</p>
+        <span class="mui-icon mui-icon-arrowright"></span>
+        <span>＞</span>
+       </a>
+     </h1>
+
+			<h1 class="line-tit">
+				<a href="javascript:void(0);">
+					职业
+          <p class="xiugai">奥特曼扫黄缉毒一大队大队长</p>
+					<span class="mui-icon mui-icon-arrowright"></span>
+					<span>＞</span>
+				</a>
+			</h1>
+
+			<h1 class="line-tit">
+				<a href="javascript:void(0);">
+					所在地
+          <p class="xiugai">山西榆次</p>
+					<span class="mui-icon mui-icon-arrowright"></span>
+					<span>＞</span>
+				</a>
+			</h1>
+
+
+		<h1 class="line-tit">
+			<a href="javascript:void(0);">
+				邮箱
+        <p class="xiugai">########@qq.com</p>
+				<span>1.5.2</span>
+			</a>
+		</h1>
+
+
+		<div class="line"></div>
+
+
+
+
+
+
+
+</body>
+
+</html>
+<script type="text/javascript" src="../script/api.js"></script>
+<script>
+	apiready = function (){
+
+	}
+	function back(){
+			api.closeWin({
+			});
+	}
+	function logOut(){
+		$api.rmStorage('pwd1');
+		$api.rmStorage('pwd');
+		api.removePrefs({
+				key: 'tx'
+		});
+		api.sendEvent({
+				name: 'reload',
+				extra: {
+						state: 'no'
+				}
+		});
+		alert('退出登录成功!');
+	}
+</script>
